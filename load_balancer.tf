@@ -12,6 +12,7 @@ resource "azurerm_lb" "load_balancer" {
 resource "azurerm_lb_backend_address_pool" "backend_pool" {
   loadbalancer_id = azurerm_lb.load_balancer.id
   name            = "BackendPool"
+  virtual_network_id = azurerm_virtual_network.vnet.id
 }
 
 resource "azurerm_lb_probe" "http_probe" {

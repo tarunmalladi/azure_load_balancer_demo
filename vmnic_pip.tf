@@ -1,12 +1,3 @@
-resource "azurerm_public_ip" "vm_public_ip" {
-  count               = 2
-  name                = "vm-public-ip-${count.index}"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  allocation_method   = "Static"  # Changed from Dynamic to Static
-  sku                 = "Standard"  # Added this line to specify Standard SKU
-}
-
 resource "azurerm_network_interface" "nic" {
   count               = 2
   name                = "nic-${count.index}"
