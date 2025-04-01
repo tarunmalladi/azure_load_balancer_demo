@@ -3,7 +3,8 @@ resource "azurerm_public_ip" "vm_public_ip" {
   name                = "vm-public-ip-${count.index}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  allocation_method   = "Dynamic"
+  allocation_method   = "Static"  # Changed from Dynamic to Static
+  sku                 = "Standard"  # Added this line to specify Standard SKU
 }
 
 resource "azurerm_network_interface" "nic" {
@@ -16,6 +17,6 @@ resource "azurerm_network_interface" "nic" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.vm_public_ip[count.index].id  # This is the line that needs to be changed
+    public_ip_address_id          = azurerm_public_ip.vm_public_ip[count.index].id
   }
 }
