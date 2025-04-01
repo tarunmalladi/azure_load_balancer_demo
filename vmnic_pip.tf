@@ -1,3 +1,11 @@
+resource "azurerm_public_ip" "vm_public_ip" {
+  count               = 2
+  name                = "vm-public-ip-${count.index}"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  allocation_method   = "Static"  # Use Static for Standard SKU
+  sku                 = "Standard"  # Ensure the SKU matches your load balancer
+}
 resource "azurerm_network_interface" "nic" {
   count               = 2
   name                = "nic-${count.index}"
@@ -10,5 +18,4 @@ resource "azurerm_network_interface" "nic" {
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.vm_public_ip[count.index].id
   }
-  
 }
